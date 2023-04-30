@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import classes from './app.module.css';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -17,44 +17,58 @@ import Typography from '@mui/material/Typography';
 
 
 const App = () => {
+  const [width, setWidth] = useState('');
+  const [height, setHeight] = useState('');
+  const [thickness, setThickness] = useState('');
+  const [materialType, setMaterialType] = useState('');
+
   const counterHandler = () => {
-    console.log('count')
+    console.log(thickness, materialType)
   };
 
   const clearHandler = () => {
     console.log('clear')
   };
 
-  const fasadeValue = event.target.value
+  const onWidthChange = (event) => {
+    setWidth(event.target.value)
+  };
 
-  const onFasadeValueChange = (event) => {
-    event.target.value
+  const onThicknessChange = (event) => {
+    const value = event.target.value;
+    setThickness(value);
   }
+
+  const onMaterialTypeChange = (event) => {
+    const value = event.target.value;
+    setMaterialType(value)
+  };
 
   return (
     <div className={classes.board}>
 
-<Typography sx={{mb: 0}} variant="h5" component="h5">
-  Рассчёт усилия подъёмника
-</Typography>
+    <Typography sx={{mb: 0}} variant="h5" component="h5">
+      Рассчёт усилия подъёмника
+    </Typography>
+    <Typography 
+      sx={{ml: 2.5, mt: -0.5, color: '#666666'}} 
+      variant="subtitle1" 
+      display="block" 
+      alignSelf="flex-start">введите размеры в милиметрах
+    </Typography>
 
-<Typography sx={{ml: 2.5, mt: -0.5, color: '#666666'}} variant="subtitle1" display="block" alignSelf="flex-start">
-  введите размеры в милиметрах
-</Typography>
-
-       <TextField
-         sx={{width: 324}}
-        // error
-        id="outlined-basic"
-        type="number"
-        label="Ширина фасада"
-        variant="outlined"
-        // helperText="Incorrect entry."
-        size="medium"
-        margin="normal"
-        value={fasadeValue}
-        onChange={onFasadeValueChange}
-        />
+    <TextField
+      sx={{width: 324}}
+    // error
+      id="outlined-basic"
+      type="number"
+      label="Ширина фасада"
+      variant="outlined"
+      // helperText="Incorrect entry."
+      size="medium"
+      margin="normal"
+      value={width}
+      onChange={onWidthChange}/>
 
       <TextField
         sx={{width: 324}}
@@ -64,6 +78,7 @@ const App = () => {
         variant="outlined"
         size="medium"
         margin="normal"
+        value={height}
         />
 
       <FormControl sx={{ m: 2, width: 324 }} size="medium">
@@ -73,7 +88,7 @@ const App = () => {
           id="demo-simple-select"
           // value={age}
           label="Тип материала"
-          // onChange={handleChange}
+          onChange={onMaterialTypeChange}
         >
           <MenuItem value={16}>ДСП</MenuItem>
           <MenuItem value={18}>МДФ</MenuItem>
@@ -89,14 +104,14 @@ const App = () => {
           id="demo-simple-select"
           // value={age}
           label="Толщина материала"
-          // onChange={handleChange}
+          onChange={onThicknessChange}
         >
-          <MenuItem value={15}>15</MenuItem>
-          <MenuItem value={16}>16</MenuItem>
-          <MenuItem value={17}>17</MenuItem>
-          <MenuItem value={18}>18</MenuItem>
-          <MenuItem value={19}>19</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
+          <MenuItem value={16}>16 мм</MenuItem>
+          <MenuItem value={17}>17 мм</MenuItem>
+          <MenuItem value={18}>18 мм</MenuItem>
+          <MenuItem value={19}>19 мм</MenuItem>
+          <MenuItem value={15}>15 мм</MenuItem>
+          <MenuItem value={20}>20 мм</MenuItem>
         </Select>
       </FormControl>
 
