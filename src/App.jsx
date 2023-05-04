@@ -20,19 +20,27 @@ const App = () => {
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
   const [thickness, setThickness] = useState('');
-  const [materialType, setMaterialType] = useState('');
+  const [density, setDensity] = useState('');
+  const [weight, setWeight] = useState('0');
+  const [result, setResult] = useState('');
 
   const counterHandler = () => {
-    console.log(thickness, materialType)
+    const fasadeWeight = width * height * thickness * density;
+    setWeight(fasadeWeight.toFixed(3) + ' кг');
+   
   };
 
   const clearHandler = () => {
-    console.log('clear')
+   
   };
 
   const onWidthChange = (event) => {
     setWidth(event.target.value)
   };
+
+  const onHeightChange = (event) => {
+    setHeight(event.target.value)
+  }
 
   const onThicknessChange = (event) => {
     const value = event.target.value;
@@ -41,7 +49,7 @@ const App = () => {
 
   const onMaterialTypeChange = (event) => {
     const value = event.target.value;
-    setMaterialType(value)
+    setDensity(value)
   };
 
   return (
@@ -79,6 +87,7 @@ const App = () => {
         size="medium"
         margin="normal"
         value={height}
+        onChange={onHeightChange}
         />
 
       <FormControl sx={{ m: 2, width: 324 }} size="medium">
@@ -90,8 +99,8 @@ const App = () => {
           label="Тип материала"
           onChange={onMaterialTypeChange}
         >
-          <MenuItem value={16}>ДСП</MenuItem>
-          <MenuItem value={18}>МДФ</MenuItem>
+          <MenuItem value={0.00000069}>ДСП</MenuItem>
+          <MenuItem value={0.00000075}>МДФ</MenuItem>
           <MenuItem value={540}>Массив: липа, сосна, тополь, осина, кедр, ель, ольха, ива</MenuItem>
           <MenuItem value={650}>Массив: дуб, лиственница, бук, береза, ясень, яблоня, вяз, клен</MenuItem>
         </Select>
@@ -141,8 +150,10 @@ const App = () => {
         </RadioGroup>
 
         <FormLabel sx={{ mt: 1}} id="demo-row-radio-buttons-group-label">Масса фасада</FormLabel>
+        <output className={classes.output}>{weight}</output>
 
         <FormLabel sx={{ mt: 1}} id="demo-row-radio-buttons-group-label">Результат</FormLabel>
+        <output className={classes.output}>{result}</output>
 
       <Button variant="contained" sx={{mb: 1.5, mt: 1, width: 324}} onClick={counterHandler}>Считать</Button>
       <Button variant="contained" color="error" sx={{width: 324}} onClick={clearHandler}>Очистить</Button>
