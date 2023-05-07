@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import classes from './app.module.css';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -21,13 +19,20 @@ const App = () => {
   const [height, setHeight] = useState('');
   const [thickness, setThickness] = useState('');
   const [density, setDensity] = useState('');
-  const [weight, setWeight] = useState('0');
+  const [weight, setWeight] = useState(0);
+  const [degree, setDegree] = useState('');
+  const [quantity, setQuantity] = useState('')
   const [result, setResult] = useState('');
+
+  const forceCalculation = (fasadeWeight) => {
+    console.log(typeof fasadeWeight)
+    // return (((weight * (height / 2)) / (quantity * degree)) * 0.15) * 10;
+  };
 
   const counterHandler = () => {
     const fasadeWeight = width * height * thickness * density;
     setWeight(fasadeWeight.toFixed(3) + ' кг');
-   
+    forceCalculation(weight, height, degree, quantity, fasadeWeight)
   };
 
   const clearHandler = () => {
@@ -51,6 +56,16 @@ const App = () => {
     const value = event.target.value;
     setDensity(value)
   };
+
+  const onDegreeChange = (event) => {
+    const value = event.target.value;
+    setDegree(value);
+  };
+
+  const onQuantityChange = (event) => {
+    const value = event.target.value;
+    setQuantity(value);
+  }
 
   return (
     <div className={classes.board}>
@@ -90,6 +105,8 @@ const App = () => {
         onChange={onHeightChange}
         />
 
+
+      {/* Тип материала */}
       <FormControl sx={{ m: 2, width: 324 }} size="medium">
         <InputLabel id="demo-simple-select-label">Тип материала</InputLabel>
         <Select
@@ -106,6 +123,7 @@ const App = () => {
         </Select>
       </FormControl>
 
+      {/* Толщина материала */}
       <FormControl sx={{ m: 2, width: 324 }} size="medium">
         <InputLabel id="demo-simple-select-label">Толщина материала</InputLabel>
         <Select
@@ -115,11 +133,11 @@ const App = () => {
           label="Толщина материала"
           onChange={onThicknessChange}
         >
+          <MenuItem value={15}>15 мм</MenuItem>
           <MenuItem value={16}>16 мм</MenuItem>
           <MenuItem value={17}>17 мм</MenuItem>
           <MenuItem value={18}>18 мм</MenuItem>
           <MenuItem value={19}>19 мм</MenuItem>
-          <MenuItem value={15}>15 мм</MenuItem>
           <MenuItem value={20}>20 мм</MenuItem>
         </Select>
       </FormControl>
@@ -130,10 +148,11 @@ const App = () => {
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
           name="row-radio-buttons-group"
+          onChange={onDegreeChange}
         >
-          <FormControlLabel value="female" control={<Radio size="small"/>} label="75°" />
-          <FormControlLabel value="male" control={<Radio size="small"/>} label="90°" />
-          <FormControlLabel value="other" control={<Radio size="small"/>} label="100°" />
+          <FormControlLabel value={75} control={<Radio size="small"/>} label="75°" />
+          <FormControlLabel value={90} control={<Radio size="small"/>} label="90°" />
+          <FormControlLabel value={100} control={<Radio size="small"/>} label="100°" />
         </RadioGroup>
 
 
@@ -143,9 +162,10 @@ const App = () => {
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
           name="row-radio-buttons-group"
+          onChange={onQuantityChange}
         >
-          <FormControlLabel value="female" control={<Radio size="small"/>} label="1" />
-          <FormControlLabel value="male" control={<Radio size="small"/>} label="2" />
+          <FormControlLabel value={1} control={<Radio size="small"/>} label="1" />
+          <FormControlLabel value={2} control={<Radio size="small"/>} label="2" />
 
         </RadioGroup>
 
