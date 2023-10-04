@@ -12,8 +12,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 
-
-
 const App = () => {
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
@@ -23,8 +21,7 @@ const App = () => {
   const [degree, setDegree] = useState(0);
   const [quantity, setQuantity] = useState(0)
   const [result, setResult] = useState('');
-
-
+  const [quantityText, setQuantityText] = useState('');
 
   const counterHandler = async () => {
     const fasadeWeight = width * height * thickness * density;
@@ -33,25 +30,28 @@ const App = () => {
     setWeight(fasadeWeight.toFixed(3) + ' кг');
 
     if (force <= 5) {
-      setResult('50N');
+      setResult(quantityText + '50N');
     } else if (force <= 6) {
-      setResult('60N');
+      setResult(quantityText + '60N');
     } else if (force <= 8) {
-      setResult('80N');
+      setResult(quantityText + '80N');
     } else if (force <= 10) {
-      setResult('100N');
+      setResult(quantityText + '100N');
     } else if (force <= 12) {
-        setResult('120N');
+        setResult(quantityText + '120N');
     } else if (force < 18) {
-      setResult('150N');
+      setResult(quantityText + '150N');
     } else {
       setResult('Ошибка');
     }
- 
   };
 
   const clearHandler = () => {
-   
+    setWidth('');
+    setHeight('');
+    setThickness(0);
+    setResult('');
+    setWeight(0);
   };
 
   const onWidthChange = (event) => {
@@ -81,6 +81,7 @@ const App = () => {
   const onQuantityChange = (event) => {
     const value = event.target.value;
     setQuantity(parseInt(value));
+    value == 1 ? setQuantityText('Один кронштейн ') : setQuantityText('Два кронштейна ')
   }
 
   return (
@@ -93,7 +94,7 @@ const App = () => {
       sx={{ml: 2.5, mt: -0.5, color: '#666666'}} 
       variant="subtitle1" 
       display="block" 
-      alignSelf="flex-start">введите размеры в милиметрах
+      alignSelf="flex-start">введите размеры в миллиметрах
     </Typography>
 
     <TextField
@@ -157,8 +158,6 @@ const App = () => {
           <MenuItem value={20}>20 мм</MenuItem>
         </Select>
       </FormControl>
-
-
         <FormLabel sx={{ mt: 1}} id="demo-row-radio-buttons-group-label">Угол откытия фасада</FormLabel>
         <RadioGroup
           row
@@ -170,9 +169,6 @@ const App = () => {
           <FormControlLabel value={90} control={<Radio size="small"/>} label="90°" />
           <FormControlLabel value={100} control={<Radio size="small"/>} label="100°" />
         </RadioGroup>
-
-
-
         <FormLabel sx={{ mt: 1}} id="demo-row-radio-buttons-group-label">Количество кронштейнов</FormLabel>
         <RadioGroup
           row
