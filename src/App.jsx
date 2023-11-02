@@ -16,7 +16,7 @@ const App = () => {
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
   const [thickness, setThickness] = useState('');
-  const [density, setDensity] = useState(0);
+  const [density, setDensity] = useState(0); //Плотоность материала
   const [weight, setWeight] = useState(0);
   const [degree, setDegree] = useState(0);
   const [quantity, setQuantity] = useState(0)
@@ -49,7 +49,6 @@ const App = () => {
   const clearHandler = () => {
     setWidth('');
     setHeight('');
-    setThickness(0);
     setResult('');
     setWeight(0);
   };
