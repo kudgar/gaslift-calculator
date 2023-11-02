@@ -12,31 +12,45 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 
-
-
 const App = () => {
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
   const [thickness, setThickness] = useState('');
-  const [density, setDensity] = useState('');
+  const [density, setDensity] = useState(0); //Плотоность материала
   const [weight, setWeight] = useState(0);
-  const [degree, setDegree] = useState('');
-  const [quantity, setQuantity] = useState('')
+  const [degree, setDegree] = useState(0);
+  const [quantity, setQuantity] = useState(0)
   const [result, setResult] = useState('');
+  const [quantityText, setQuantityText] = useState('');
 
-  const forceCalculation = (fasadeWeight) => {
-    console.log(typeof fasadeWeight)
-    // return (((weight * (height / 2)) / (quantity * degree)) * 0.15) * 10;
-  };
-
-  const counterHandler = () => {
+  const counterHandler = async () => {
     const fasadeWeight = width * height * thickness * density;
+    const force = (((fasadeWeight * (height / 2)) / (quantity * degree)) * 0.15) * 10;
+
     setWeight(fasadeWeight.toFixed(3) + ' кг');
-    forceCalculation(weight, height, degree, quantity, fasadeWeight)
+
+    if (force <= 5) {
+      setResult(quantityText + '50N');
+    } else if (force <= 6) {
+      setResult(quantityText + '60N');
+    } else if (force <= 8) {
+      setResult(quantityText + '80N');
+    } else if (force <= 10) {
+      setResult(quantityText + '100N');
+    } else if (force <= 12) {
+        setResult(quantityText + '120N');
+    } else if (force < 18) {
+      setResult(quantityText + '150N');
+    } else {
+      setResult('Ошибка');
+    }
   };
 
   const clearHandler = () => {
-   
+    setWidth('');
+    setHeight('');
+    setResult('');
+    setWeight(0);
   };
 
   const onWidthChange = (event) => {
@@ -44,12 +58,13 @@ const App = () => {
   };
 
   const onHeightChange = (event) => {
-    setHeight(event.target.value)
+    const value = event.target.value;
+    setHeight(parseInt(value))
   }
 
   const onThicknessChange = (event) => {
     const value = event.target.value;
-    setThickness(value);
+    setThickness(parseInt(value));
   }
 
   const onMaterialTypeChange = (event) => {
@@ -59,12 +74,13 @@ const App = () => {
 
   const onDegreeChange = (event) => {
     const value = event.target.value;
-    setDegree(value);
+    setDegree(parseInt(value));
   };
 
   const onQuantityChange = (event) => {
     const value = event.target.value;
-    setQuantity(value);
+    setQuantity(parseInt(value));
+    value == 1 ? setQuantityText('Один кронштейн ') : setQuantityText('Два кронштейна ')
   }
 
   return (
@@ -77,7 +93,7 @@ const App = () => {
       sx={{ml: 2.5, mt: -0.5, color: '#666666'}} 
       variant="subtitle1" 
       display="block" 
-      alignSelf="flex-start">введите размеры в милиметрах
+      alignSelf="flex-start">введите размеры в миллиметрах
     </Typography>
 
     <TextField
@@ -118,8 +134,8 @@ const App = () => {
         >
           <MenuItem value={0.00000069}>ДСП</MenuItem>
           <MenuItem value={0.00000075}>МДФ</MenuItem>
-          <MenuItem value={540}>Массив: липа, сосна, тополь, осина, кедр, ель, ольха, ива</MenuItem>
-          <MenuItem value={650}>Массив: дуб, лиственница, бук, береза, ясень, яблоня, вяз, клен</MenuItem>
+          <MenuItem value={0.00000054}>Массив: липа, сосна, тополь, осина, кедр, ель, ольха, ива</MenuItem>
+          <MenuItem value={0.00000065}>Массив: дуб, лиственница, бук, береза, ясень, яблоня, вяз, клен</MenuItem>
         </Select>
       </FormControl>
 
@@ -141,8 +157,6 @@ const App = () => {
           <MenuItem value={20}>20 мм</MenuItem>
         </Select>
       </FormControl>
-
-
         <FormLabel sx={{ mt: 1}} id="demo-row-radio-buttons-group-label">Угол откытия фасада</FormLabel>
         <RadioGroup
           row
@@ -154,9 +168,6 @@ const App = () => {
           <FormControlLabel value={90} control={<Radio size="small"/>} label="90°" />
           <FormControlLabel value={100} control={<Radio size="small"/>} label="100°" />
         </RadioGroup>
-
-
-
         <FormLabel sx={{ mt: 1}} id="demo-row-radio-buttons-group-label">Количество кронштейнов</FormLabel>
         <RadioGroup
           row
