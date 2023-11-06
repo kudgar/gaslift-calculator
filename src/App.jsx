@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import classes from './app.module.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -20,7 +20,7 @@ const App = () => {
   const [weight, setWeight] = useState(0);
   const [degree, setDegree] = useState(0);
   const [quantity, setQuantity] = useState(0)
-  const [result, setResult] = useState('');
+  const [result, setResult] = useState('-');
   const [quantityText, setQuantityText] = useState('');
 
   const counterHandler = async () => {
@@ -38,7 +38,7 @@ const App = () => {
     } else if (force <= 10) {
       setResult(quantityText + '100N');
     } else if (force <= 12) {
-        setResult(quantityText + '120N');
+      setResult(quantityText + '120N');
     } else if (force < 18) {
       setResult(quantityText + '150N');
     } else {
@@ -86,44 +86,44 @@ const App = () => {
   return (
     <div className={classes.board}>
 
-    <Typography sx={{mb: 0}} variant="h5" component="h5">
-      Рассчёт усилия подъёмника
-    </Typography>
-    <Typography 
-      sx={{ml: 2.5, mt: -0.5, color: '#666666'}} 
-      variant="subtitle1" 
-      display="block" 
-      alignSelf="flex-start">введите размеры в миллиметрах
-    </Typography>
-
-    <TextField
-      sx={{width: 324}}
-    // error
-      id="outlined-basic"
-      type="number"
-      label="Ширина фасада"
-      variant="outlined"
-      // helperText="Incorrect entry."
-      size="medium"
-      margin="normal"
-      value={width}
-      onChange={onWidthChange}/>
+      <Typography sx={{ mb: 0 }} variant="h6" component="h6">
+        Расчёт усилия подъёмника
+      </Typography>
+      {/* <Typography
+        sx={{ ml: 2.5, mt: -0.5, color: '#666666' }}
+        variant="subtitle1"
+        display="block"
+        alignSelf="flex-start">введите размеры в миллиметрах
+      </Typography> */}
 
       <TextField
-        sx={{width: 324}}
+        sx={{ width: 324 }}
+        // error
         id="outlined-basic"
         type="number"
-        label="Высота фасада"
+        label="Ширина фасада, мм."
         variant="outlined"
-        size="medium"
+        // helperText="Incorrect entry."
+        size="small"
+        margin="normal"
+        value={width}
+        onChange={onWidthChange} />
+
+      <TextField
+        sx={{ width: 324 }}
+        id="outlined-basic"
+        type="number"
+        label="Высота фасада, мм."
+        variant="outlined"
+        size="small"
         margin="normal"
         value={height}
         onChange={onHeightChange}
-        />
+      />
 
 
       {/* Тип материала */}
-      <FormControl sx={{ m: 2, width: 324 }} size="medium">
+      <FormControl sx={{ m: 2, width: 324 }} size="small">
         <InputLabel id="demo-simple-select-label">Тип материала</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -140,7 +140,7 @@ const App = () => {
       </FormControl>
 
       {/* Толщина материала */}
-      <FormControl sx={{ m: 2, width: 324 }} size="medium">
+      <FormControl sx={{ m: 1, width: 324 }} size="small">
         <InputLabel id="demo-simple-select-label">Толщина материала</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -157,37 +157,37 @@ const App = () => {
           <MenuItem value={20}>20 мм</MenuItem>
         </Select>
       </FormControl>
-        <FormLabel sx={{ mt: 1}} id="demo-row-radio-buttons-group-label">Угол откытия фасада</FormLabel>
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
-          onChange={onDegreeChange}
-        >
-          <FormControlLabel value={75} control={<Radio size="small"/>} label="75°" />
-          <FormControlLabel value={90} control={<Radio size="small"/>} label="90°" />
-          <FormControlLabel value={100} control={<Radio size="small"/>} label="100°" />
-        </RadioGroup>
-        <FormLabel sx={{ mt: 1}} id="demo-row-radio-buttons-group-label">Количество кронштейнов</FormLabel>
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
-          onChange={onQuantityChange}
-        >
-          <FormControlLabel value={1} control={<Radio size="small"/>} label="1" />
-          <FormControlLabel value={2} control={<Radio size="small"/>} label="2" />
+      <FormLabel sx={{ mt: 0.5 }} id="demo-row-radio-buttons-group-label">Угол откытия фасада</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        onChange={onDegreeChange}
+      >
+        <FormControlLabel value={75} control={<Radio size="small" />} label="75°" />
+        <FormControlLabel value={90} control={<Radio size="small" />} label="90°" />
+        <FormControlLabel value={100} control={<Radio size="small" />} label="100°" />
+      </RadioGroup>
+      <FormLabel sx={{ mt: 1 }} id="demo-row-radio-buttons-group-label">Количество кронштейнов</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        onChange={onQuantityChange}
+      >
+        <FormControlLabel value={1} control={<Radio size="small" />} label="1" />
+        <FormControlLabel value={2} control={<Radio size="small" />} label="2" />
 
-        </RadioGroup>
+      </RadioGroup>
 
-        <FormLabel sx={{ mt: 1}} id="demo-row-radio-buttons-group-label">Масса фасада</FormLabel>
-        <output className={classes.output}>{weight}</output>
+      <FormLabel sx={{ mt: 1 }} id="demo-row-radio-buttons-group-label">Масса фасада</FormLabel>
+      <output className={classes.output}>{weight}</output>
 
-        <FormLabel sx={{ mt: 1}} id="demo-row-radio-buttons-group-label">Результат</FormLabel>
-        <output className={classes.output}>{result}</output>
+      <FormLabel sx={{ mt: 1 }} id="demo-row-radio-buttons-group-label">Результат</FormLabel>
+      <output className={classes.output}>{result}</output>
 
-      <Button variant="contained" sx={{mb: 1.5, mt: 1, width: 324}} onClick={counterHandler}>Считать</Button>
-      <Button variant="contained" color="error" sx={{width: 324}} onClick={clearHandler}>Очистить</Button>
+      <Button variant="contained" sx={{ mb: 1.5, mt: 1, width: 324 }} onClick={counterHandler}>Считать</Button>
+      <Button variant="contained" color="error" sx={{ width: 324 }} onClick={clearHandler}>Очистить</Button>
 
     </div>
 
