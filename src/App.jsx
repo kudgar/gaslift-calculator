@@ -42,7 +42,7 @@ const App = () => {
     } else if (force < 18) {
       setResult(quantityText + '150N');
     } else {
-      setResult('Ошибка');
+      setResult('Слишком тяжелый фасад');
     }
   };
 
@@ -84,111 +84,104 @@ const App = () => {
   }
 
   return (
-    <div className={classes.board}>
+    <div className={classes.container}>
+      <div className={classes.board}>
+        <Typography sx={{ mb: 0 }} variant="h6" component="h6">
+          Расчёт усилия подъёмника
+        </Typography>
 
-      <Typography sx={{ mb: 0 }} variant="h6" component="h6">
-        Расчёт усилия подъёмника
-      </Typography>
-      {/* <Typography
-        sx={{ ml: 2.5, mt: -0.5, color: '#666666' }}
-        variant="subtitle1"
-        display="block"
-        alignSelf="flex-start">введите размеры в миллиметрах
-      </Typography> */}
+        <TextField
+          sx={{ width: 324 }}
+          // error
+          id="outlined-basic"
+          type="number"
+          label="Ширина фасада, мм."
+          variant="outlined"
+          // helperText="Incorrect entry."
+          size="small"
+          margin="normal"
+          value={width}
+          onChange={onWidthChange} />
 
-      <TextField
-        sx={{ width: 324 }}
-        // error
-        id="outlined-basic"
-        type="number"
-        label="Ширина фасада, мм."
-        variant="outlined"
-        // helperText="Incorrect entry."
-        size="small"
-        margin="normal"
-        value={width}
-        onChange={onWidthChange} />
-
-      <TextField
-        sx={{ width: 324 }}
-        id="outlined-basic"
-        type="number"
-        label="Высота фасада, мм."
-        variant="outlined"
-        size="small"
-        margin="normal"
-        value={height}
-        onChange={onHeightChange}
-      />
+        <TextField
+          sx={{ width: 324 }}
+          id="outlined-basic"
+          type="number"
+          label="Высота фасада, мм."
+          variant="outlined"
+          size="small"
+          margin="normal"
+          value={height}
+          onChange={onHeightChange}
+        />
 
 
-      {/* Тип материала */}
-      <FormControl sx={{ m: 2, width: 324 }} size="small">
-        <InputLabel id="demo-simple-select-label">Тип материала</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          // value={age}
-          label="Тип материала"
-          onChange={onMaterialTypeChange}
+        {/* Тип материала */}
+        <FormControl sx={{ m: 2, width: 324 }} size="small">
+          <InputLabel id="demo-simple-select-label">Тип материала</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Тип материала"
+            onChange={onMaterialTypeChange}
+          >
+            <MenuItem value={0.00000069}>ДСП</MenuItem>
+            <MenuItem value={0.00000075}>МДФ</MenuItem>
+            <MenuItem value={0.00000054}>Массив: липа, сосна, тополь, осина, кедр, ель, ольха, ива</MenuItem>
+            <MenuItem value={0.00000065}>Массив: дуб, лиственница, бук, береза, ясень, яблоня, вяз, клен</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* Толщина материала */}
+        <FormControl sx={{ m: 1, width: 324 }} size="small">
+          <InputLabel id="demo-simple-select-label">Толщина материала</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Толщина материала"
+            onChange={onThicknessChange}
+          >
+            <MenuItem value={15}>15 мм</MenuItem>
+            <MenuItem value={16}>16 мм</MenuItem>
+            <MenuItem value={17}>17 мм</MenuItem>
+            <MenuItem value={18}>18 мм</MenuItem>
+            <MenuItem value={19}>19 мм</MenuItem>
+            <MenuItem value={20}>20 мм</MenuItem>
+          </Select>
+        </FormControl>
+        <FormLabel sx={{ mt: 0.5 }} id="demo-row-radio-buttons-group-label">Угол откытия фасада</FormLabel>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          onChange={onDegreeChange}
         >
-          <MenuItem value={0.00000069}>ДСП</MenuItem>
-          <MenuItem value={0.00000075}>МДФ</MenuItem>
-          <MenuItem value={0.00000054}>Массив: липа, сосна, тополь, осина, кедр, ель, ольха, ива</MenuItem>
-          <MenuItem value={0.00000065}>Массив: дуб, лиственница, бук, береза, ясень, яблоня, вяз, клен</MenuItem>
-        </Select>
-      </FormControl>
-
-      {/* Толщина материала */}
-      <FormControl sx={{ m: 1, width: 324 }} size="small">
-        <InputLabel id="demo-simple-select-label">Толщина материала</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          // value={age}
-          label="Толщина материала"
-          onChange={onThicknessChange}
+          <FormControlLabel value={100} control={<Radio size="small" />} label="75°" />
+          <FormControlLabel value={90} control={<Radio size="small" />} label="90°" />
+          <FormControlLabel value={80} control={<Radio size="small" />} label="100°" />
+        </RadioGroup>
+        <FormLabel sx={{ mt: 1 }} id="demo-row-radio-buttons-group-label">Количество кронштейнов</FormLabel>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          onChange={onQuantityChange}
         >
-          <MenuItem value={15}>15 мм</MenuItem>
-          <MenuItem value={16}>16 мм</MenuItem>
-          <MenuItem value={17}>17 мм</MenuItem>
-          <MenuItem value={18}>18 мм</MenuItem>
-          <MenuItem value={19}>19 мм</MenuItem>
-          <MenuItem value={20}>20 мм</MenuItem>
-        </Select>
-      </FormControl>
-      <FormLabel sx={{ mt: 0.5 }} id="demo-row-radio-buttons-group-label">Угол откытия фасада</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-        onChange={onDegreeChange}
-      >
-        <FormControlLabel value={75} control={<Radio size="small" />} label="75°" />
-        <FormControlLabel value={90} control={<Radio size="small" />} label="90°" />
-        <FormControlLabel value={100} control={<Radio size="small" />} label="100°" />
-      </RadioGroup>
-      <FormLabel sx={{ mt: 1 }} id="demo-row-radio-buttons-group-label">Количество кронштейнов</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-        onChange={onQuantityChange}
-      >
-        <FormControlLabel value={1} control={<Radio size="small" />} label="1" />
-        <FormControlLabel value={2} control={<Radio size="small" />} label="2" />
+          <FormControlLabel value={1} control={<Radio size="small" />} label="1" />
+          <FormControlLabel value={2} control={<Radio size="small" />} label="2" />
 
-      </RadioGroup>
+        </RadioGroup>
 
-      <FormLabel sx={{ mt: 1 }} id="demo-row-radio-buttons-group-label">Масса фасада</FormLabel>
-      <output className={classes.output}>{weight}</output>
+        <FormLabel sx={{ mt: 1 }} id="demo-row-radio-buttons-group-label">Масса фасада</FormLabel>
+        <output className={classes.output}>{weight}</output>
 
-      <FormLabel sx={{ mt: 1 }} id="demo-row-radio-buttons-group-label">Результат</FormLabel>
-      <output className={classes.output}>{result}</output>
+        <FormLabel sx={{ mt: 1 }} id="demo-row-radio-buttons-group-label">Результат</FormLabel>
+        <output className={classes.output}>{result}</output>
 
-      <Button variant="contained" sx={{ mb: 1.5, mt: 1, width: 324 }} onClick={counterHandler}>Считать</Button>
-      <Button variant="contained" color="error" sx={{ width: 324 }} onClick={clearHandler}>Очистить</Button>
+        <Button variant="contained" sx={{ mb: 1.5, mt: 1, width: 324 }} onClick={counterHandler}>Считать</Button>
+        <Button variant="contained" color="error" sx={{ width: 324 }} onClick={clearHandler}>Очистить</Button>
 
+      </div>
     </div>
 
   )
